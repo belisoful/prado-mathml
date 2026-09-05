@@ -4,7 +4,7 @@
  * TMo class file
  *
  * @author Brad Anderson <belisoful@icloud.com>
- * @link https://github.com/pradosoft/prado-mathml
+ * @link https://github.com/belisoful/prado-mathml
  * @license https://github.com/pradosoft/prado/blob/master/LICENSE
  */
 
