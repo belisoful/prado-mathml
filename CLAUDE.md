@@ -10,7 +10,7 @@ attributes exposed as typed component properties.
 
 ## Version
 
-- **Current version: v1.0.0** (initial release).
+- **Current version: v0.1.0** (initial release).
 - Because this is the initial release, source docblocks carry **no `@since` tags** —
   do not add them.
 
