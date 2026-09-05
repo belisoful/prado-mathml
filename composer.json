@@ -1,0 +1,65 @@
+{
+	"name": "belisoful/prado-mathml",
+	"type": "prado4-extension",
+	"description": "MathML presentation controls for the PRADO PHP framework: a web control for every MathML Core element (<math>, the token elements mi/mn/mo/ms/mtext/mspace, the layout elements mrow/mfrac/msqrt/mroot/mstyle/merror/mpadded/mphantom, the script and limit elements msub/msup/msubsup/munder/mover/munderover/mmultiscripts/mprescripts, the table elements mtable/mtr/mtd, and semantics/annotation/annotation-xml), each rendering its tag through PRADO's TWebControl with the element's key MathML attributes exposed as typed component properties.",
+	"keywords": [
+		"prado",
+		"framework",
+		"math",
+		"mathml",
+		"mathml-core",
+		"webcontrol",
+		"control",
+		"extension"
+	],
+	"homepage": "https://github.com/pradosoft/prado-mathml",
+	"license": "BSD-3-Clause",
+	"authors": [
+		{
+			"name": "Brad Anderson",
+			"email": "belisoful@icloud.com",
+			"role": "Developer",
+			"homepage": "https://github.com/belisoful"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Prado\\": "src"
+		}
+	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://asset-packagist.org"
+		}
+	],
+	"require": {
+		"php": ">=8.1.0"
+	},
+	"require-dev": {
+		"pradosoft/prado": "^4.4@dev",
+		"phpunit/phpunit": "^10",
+		"phpdocumentor/shim": "^3",
+		"friendsofphp/php-cs-fixer": "^3.94",
+		"phpstan/phpstan": "^2.1"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"config": {
+		"platform": {
+			"php": "8.1"
+		},
+		"allow-plugins": {
+			"phpdocumentor/shim": true
+		}
+	},
+	"scripts": {
+		"unittest": "vendor/bin/phpunit --testsuite unit"
+	},
+	"extra": {
+		"prado": {
+			"error-messages": "config/errorMessages.txt",
+			"class-map": "config/classMap.json"
+		}
+	}
+}
