@@ -10,9 +10,10 @@ attributes exposed as typed component properties.
 
 ## Version
 
-- **Current version: v0.1.0** (initial release).
-- Because this is the initial release, source docblocks carry **no `@since` tags** —
-  do not add them.
+- **Current version: v0.2.0** (released; the first release was v0.1.0).
+- Code released in v0.1.0 or v0.2.0 carries **no `@since` tags** — do not add them
+  there. A class, property, or method added after v0.2.0 gets `@since` naming the
+  release that first ships it.
 
 ## Key facts
 
