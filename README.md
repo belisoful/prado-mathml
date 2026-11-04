@@ -134,7 +134,7 @@ Token elements hold text rather than child elements. All share `MathVariant`
 
 The controls carry no PHP-extension dependencies beyond the framework's own; the
 test suite instantiates each control and renders it through a `THtmlWriter`, so it
-runs on any PHP 8.1+ install.
+runs on any PHP 8.2+ install.
 
 ```sh
 composer install

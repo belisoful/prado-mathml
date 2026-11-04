@@ -65,6 +65,7 @@ class TMoTest extends TestCase
 	{
 		$control = new TMo();
 		$this->expectException(TInvalidDataValueException::class);
+		$this->expectExceptionMessage("The <mo> Form 'sideways' must be 'prefix', 'infix', 'postfix', or empty.");
 		$control->setForm('sideways');
 	}
 

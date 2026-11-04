@@ -65,6 +65,7 @@ class TMathTest extends TestCase
 	{
 		$control = new TMath();
 		$this->expectException(TInvalidDataValueException::class);
+		$this->expectExceptionMessage("The <math> Display 'sideways' must be 'block', 'inline', or empty.");
 		$control->setDisplay('sideways');
 	}
 }

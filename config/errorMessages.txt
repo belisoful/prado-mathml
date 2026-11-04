@@ -1,3 +1,6 @@
+# PRADO MathML extension error messages: English.
+# Values are ICU MessageFormat patterns formatted with the exception arguments {0}, {1}, ...
+# An apostrophe before or after a brace is doubled: ''{0}'' renders the argument in single quotes.
 
-math_display_invalid			= The <math> Display '{0}' must be 'block', 'inline', or empty.
-math_operator_form_invalid		= The <mo> Form '{0}' must be 'prefix', 'infix', 'postfix', or empty.
+math_display_invalid			= The <math> Display ''{0}'' must be 'block', 'inline', or empty.
+math_operator_form_invalid		= The <mo> Form ''{0}'' must be 'prefix', 'infix', 'postfix', or empty.

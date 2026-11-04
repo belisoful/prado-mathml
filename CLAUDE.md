@@ -44,6 +44,10 @@ attributes exposed as typed component properties.
   `TInvalidDataValueException` with a code from `config/errorMessages.txt`
   (`TMath::Display` → `math_display_invalid`; `TMo::Form` →
   `math_operator_form_invalid`). Empty is always allowed and means "no attribute".
+- Error message entries are **ICU MessageFormat** patterns (PRADO formats them with
+  `MessageFormatter`). An apostrophe next to a brace is doubled: write `''{0}''` to
+  quote an argument — `'{0}'` renders the literal text `{0}`. Other apostrophes, as
+  in `'block'`, are literal.
 - Modeled properties are stored in **view state** (`getViewState`/`setViewState`),
   like the framework's own `TDetails`, not in private fields — so they survive
   postback. `TagName` is the one exception, held by `THtmlElement` in a private field.
