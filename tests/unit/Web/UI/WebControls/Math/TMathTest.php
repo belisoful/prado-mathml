@@ -68,4 +68,20 @@ class TMathTest extends TestCase
 		$this->expectExceptionMessage("The <math> Display 'sideways' must be 'block', 'inline', or empty.");
 		$control->setDisplay('sideways');
 	}
+
+	public function testDisplayIsCaseInsensitive()
+	{
+		$control = new TMath();
+		$control->setDisplay('Block');
+		$this->assertSame('block', $control->getDisplay());
+		$this->assertStringContainsString('display="block"', $this->render($control));
+	}
+
+	public function testDisplayNullClears()
+	{
+		$control = new TMath();
+		$control->setDisplay('block');
+		$control->setDisplay(null);
+		$this->assertSame('', $control->getDisplay());
+	}
 }

@@ -22,8 +22,14 @@ use Prado\Exceptions\TInvalidDataValueException;
  *
  * Properties:
  * - <b>Display</b>, string — `inline` (the default rendering, laid out in a line
- *   of text) or `block` (laid out on its own, centered line). An empty string,
- *   the default, renders no `display` attribute. Any other value throws.
+ *   of text) or `block` (laid out on its own, centered line), matched without
+ *   regard to case and stored lowercase. An empty string, the default, renders no
+ *   `display` attribute. Any other value throws.
+ *
+ *   This replaces the CSS `Display` property TMath inherits from
+ *   {@see \Prado\Web\UI\WebControls\TWebControl} (`Fixed`, `None`, `Dynamic`,
+ *   `Hidden`), so `Display="None"` throws rather than hiding the element; hide
+ *   it with `Visible="false"` or `Hidden="true"` instead.
  *
  * Template usage:
  * ```html
@@ -57,12 +63,12 @@ class TMath extends TMathElement
 
 	/**
 	 * Sets how the math is laid out, rendered as the `display` attribute.
-	 * @param string $value '' (no attribute), 'block', or 'inline'
+	 * @param string $value '' (no attribute), 'block', or 'inline', in any case
 	 * @throws TInvalidDataValueException if the value is not one of the above
 	 */
 	public function setDisplay($value)
 	{
-		$value = TPropertyValue::ensureString($value);
+		$value = strtolower(TPropertyValue::ensureString($value));
 		if ($value !== '' && $value !== 'block' && $value !== 'inline') {
 			throw new TInvalidDataValueException('math_display_invalid', $value);
 		}

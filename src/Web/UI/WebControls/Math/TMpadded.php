@@ -10,6 +10,8 @@
 
 namespace Prado\Web\UI\WebControls\Math;
 
+use Prado\TPropertyValue;
+
 /**
  * TMpadded class
  *
@@ -50,7 +52,7 @@ class TMpadded extends TMathElement
 	 */
 	public function setWidth($value)
 	{
-		$this->setViewState('Width', $value, '');
+		$this->setViewState('Width', TPropertyValue::ensureString($value), '');
 	}
 
 	/**
@@ -66,7 +68,7 @@ class TMpadded extends TMathElement
 	 */
 	public function setHeight($value)
 	{
-		$this->setViewState('Height', $value, '');
+		$this->setViewState('Height', TPropertyValue::ensureString($value), '');
 	}
 
 	/**
@@ -82,7 +84,7 @@ class TMpadded extends TMathElement
 	 */
 	public function setDepth($value)
 	{
-		$this->setViewState('Depth', $value, '');
+		$this->setViewState('Depth', TPropertyValue::ensureString($value), '');
 	}
 
 	/**
@@ -98,7 +100,7 @@ class TMpadded extends TMathElement
 	 */
 	public function setLSpace($value)
 	{
-		$this->setViewState('LSpace', $value, '');
+		$this->setViewState('LSpace', TPropertyValue::ensureString($value), '');
 	}
 
 	/**
@@ -114,7 +116,7 @@ class TMpadded extends TMathElement
 	 */
 	public function setVOffset($value)
 	{
-		$this->setViewState('VOffset', $value, '');
+		$this->setViewState('VOffset', TPropertyValue::ensureString($value), '');
 	}
 
 	/**

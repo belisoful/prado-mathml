@@ -48,4 +48,13 @@ class TMoverTest extends TestCase
 		$control->setAccent('');
 		$this->assertNull($control->getAccent());
 	}
+
+	public function testSetAccentNullClears()
+	{
+		$control = new TMover();
+		$control->setAccent(true);
+		$control->setAccent(null);
+		$this->assertNull($control->getAccent());
+		$this->assertStringNotContainsString('accent', $this->render($control));
+	}
 }

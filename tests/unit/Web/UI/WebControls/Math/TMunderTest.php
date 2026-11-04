@@ -48,4 +48,13 @@ class TMunderTest extends TestCase
 		$control->setAccentUnder('');
 		$this->assertNull($control->getAccentUnder());
 	}
+
+	public function testSetAccentUnderNullClears()
+	{
+		$control = new TMunder();
+		$control->setAccentUnder(true);
+		$control->setAccentUnder(null);
+		$this->assertNull($control->getAccentUnder());
+		$this->assertStringNotContainsString('accentunder', $this->render($control));
+	}
 }

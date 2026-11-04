@@ -1,5 +1,5 @@
 parameters:
-    phpVersion: 80300 # PHP 8.3
+    phpVersion: 80200 # PHP 8.2, the minimum
     level: 4
     bootstrapFiles:
         - tests/test_tools/phpstan-bootstrap.php

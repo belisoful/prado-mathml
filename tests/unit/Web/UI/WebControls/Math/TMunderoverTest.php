@@ -53,4 +53,16 @@ class TMunderoverTest extends TestCase
 		$this->assertNull($control->getAccentUnder());
 		$this->assertNull($control->getAccent());
 	}
+
+	public function testNullClearsAccents()
+	{
+		$control = new TMunderover();
+		$control->setAccent(true);
+		$control->setAccentUnder(true);
+		$control->setAccent(null);
+		$control->setAccentUnder(null);
+		$this->assertNull($control->getAccent());
+		$this->assertNull($control->getAccentUnder());
+		$this->assertStringNotContainsString('accent', $this->render($control));
+	}
 }

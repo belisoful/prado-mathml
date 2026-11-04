@@ -19,7 +19,7 @@ namespace Prado\Web\UI\WebControls\Math;
  *
  * @author Brad Anderson <belisoful@icloud.com>
  */
-class TMn extends TMathToken
+class TMn extends TMathElement
 {
 	/**
 	 * @return string the default tag name

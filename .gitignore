@@ -1,6 +1,6 @@
 
 # Local-only working files: license-encumbered spec PDFs and reference material,
-# downloaded per agents/README.md and never committed
+# never committed
 /local/
 
 # Local agent session state

@@ -1,7 +1,7 @@
 <?php
 
 use Prado\Web\UI\WebControls\Math\TMi;
-use Prado\Web\UI\WebControls\Math\TMathToken;
+use Prado\Exceptions\TInvalidDataValueException;
 use Prado\Web\UI\WebControls\Math\TMathElement;
 use PHPUnit\Framework\TestCase;
 
@@ -16,11 +16,9 @@ class TMiTest extends TestCase
 		$this->assertEquals('mi', $control->getTagName());
 	}
 
-	public function testExtendsTMathToken()
+	public function testExtendsTMathElement()
 	{
-		$control = new TMi();
-		$this->assertInstanceOf(TMathToken::class, $control);
-		$this->assertInstanceOf(TMathElement::class, $control);
+		$this->assertInstanceOf(TMathElement::class, new TMi());
 	}
 
 	public function testRendersTag()
@@ -44,9 +42,36 @@ class TMiTest extends TestCase
 	public function testSetMathVariantRendersAttribute()
 	{
 		$control = new TMi();
-		$control->setMathVariant('bold');
-		$this->assertEquals('bold', $control->getMathVariant());
+		$control->setMathVariant('normal');
+		$this->assertEquals('normal', $control->getMathVariant());
 		$output = $this->render($control);
-		$this->assertStringContainsString('mathvariant="bold"', $output);
+		$this->assertStringContainsString('mathvariant="normal"', $output);
+	}
+
+	public function testMathVariantIsCaseInsensitive()
+	{
+		$control = new TMi();
+		$control->setMathVariant('Normal');
+		$this->assertSame('normal', $control->getMathVariant());
+	}
+
+	public function testMathVariantClears()
+	{
+		$control = new TMi();
+		$control->setMathVariant('normal');
+		$control->setMathVariant('');
+		$this->assertSame('', $control->getMathVariant());
+		$control->setMathVariant('normal');
+		$control->setMathVariant(null);
+		$this->assertSame('', $control->getMathVariant());
+		$this->assertStringNotContainsString('mathvariant', $this->render($control));
+	}
+
+	public function testMathVariantOutsideCoreThrows()
+	{
+		$control = new TMi();
+		$this->expectException(TInvalidDataValueException::class);
+		$this->expectExceptionMessage("The <mi> MathVariant 'bold' must be 'normal' or empty.");
+		$control->setMathVariant('bold');
 	}
 }

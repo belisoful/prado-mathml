@@ -3,7 +3,6 @@
 	"TAnnotationXml": "Prado\\Web\\UI\\WebControls\\Math\\TAnnotationXml",
 	"TMath": "Prado\\Web\\UI\\WebControls\\Math\\TMath",
 	"TMathElement": "Prado\\Web\\UI\\WebControls\\Math\\TMathElement",
-	"TMathToken": "Prado\\Web\\UI\\WebControls\\Math\\TMathToken",
 	"TMerror": "Prado\\Web\\UI\\WebControls\\Math\\TMerror",
 	"TMfrac": "Prado\\Web\\UI\\WebControls\\Math\\TMfrac",
 	"TMi": "Prado\\Web\\UI\\WebControls\\Math\\TMi",

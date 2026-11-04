@@ -23,10 +23,14 @@ attributes exposed as typed component properties.
   module.
 - Every control extends `TMathElement`, which extends the framework's
   `THtmlElement` (so `TagName`/`getDefaultTagName`/`getIsMutated` and the whole
-  `TWebControl` machinery are inherited). The text/token elements additionally share
-  `TMathToken` (the `MathVariant` property). These two are the only `abstract`
-  classes; they are not registered for template use but appear in the class map for
-  completeness.
+  `TWebControl` machinery are inherited). `TMathElement` is the only `abstract`
+  class; it is not registered for template use but appears in the class map for
+  completeness. It models the MathML Core **global attributes** (`DisplayStyle`,
+  `ScriptLevel`, `MathColor`, `MathBackground`, `MathSize`), rendered after the HTML
+  ones and before each element's own.
+- Model **MathML Core**, not MathML 4 Full: an attribute Core drops is not exposed
+  (`ms` `lquote`/`rquote`), and one Core narrows is validated to Core's values
+  (`mathvariant` exists only on `TMi`, and only as `normal`).
 - A control renders its MathML tag by overriding `getDefaultTagName()`. Anything
   beyond the tag is an element-specific attribute, added by overriding
   `addAttributesToRender($writer)`: call `parent::addAttributesToRender($writer)`
@@ -39,11 +43,15 @@ attributes exposed as typed component properties.
 - Optional attributes are tri-state where "unset" must be distinguishable from a
   set value: string attributes default to `''`, booleans and integers to `null`.
   A boolean/integer setter maps `null` **and** `''` to the unset state (so a template
-  can clear one with `Prop=""`) and otherwise coerces through `TPropertyValue`.
-- Enumerated attributes validate on set and throw
+  can clear one with `Prop=""`) and otherwise coerces through `TPropertyValue`. A
+  string setter coerces through `TPropertyValue::ensureString()` (so `null` clears it).
+- Enumerated and constrained attributes validate on set and throw
   `TInvalidDataValueException` with a code from `config/errorMessages.txt`
   (`TMath::Display` → `math_display_invalid`; `TMo::Form` →
-  `math_operator_form_invalid`). Empty is always allowed and means "no attribute".
+  `math_operator_form_invalid`; `TMi::MathVariant` → `math_identifier_variant_invalid`;
+  `ScriptLevel` → `math_scriptlevel_invalid`; `TMtd` spans → `math_table_span_invalid`).
+  Empty is always allowed and means "no attribute". Enumerated values match
+  case-insensitively, as MathML Core specifies, and are stored lowercase.
 - Error message entries are **ICU MessageFormat** patterns (PRADO formats them with
   `MessageFormatter`). An apostrophe next to a brace is doubled: write `''{0}''` to
   quote an argument — `'{0}'` renders the literal text `{0}`. Other apostrophes, as
@@ -56,8 +64,8 @@ attributes exposed as typed component properties.
 
 ## Adding a control
 
-1. Create `src/Web/UI/WebControls/Math/T<Name>.php` extending `TMathElement` (or
-   `TMathToken` for a text element), overriding `getDefaultTagName()`.
+1. Create `src/Web/UI/WebControls/Math/T<Name>.php` extending `TMathElement`,
+   overriding `getDefaultTagName()`.
 2. Model each meaningful MathML attribute as a get/set property pair over view state,
    and render it in `addAttributesToRender()` via the helpers.
 3. Add the short name to `config/classMap.json` (keep it sorted).

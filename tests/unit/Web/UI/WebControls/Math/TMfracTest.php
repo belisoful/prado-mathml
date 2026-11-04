@@ -37,4 +37,14 @@ class TMfracTest extends TestCase
 		$output = $this->render($control);
 		$this->assertStringContainsString('linethickness="0"', $output);
 	}
+
+	public function testLineThicknessCoercesToString()
+	{
+		$control = new TMfrac();
+		$control->setLineThickness(0);
+		$this->assertSame('0', $control->getLineThickness());
+		$this->assertStringContainsString('linethickness="0"', $this->render($control));
+		$control->setLineThickness(null);
+		$this->assertSame('', $control->getLineThickness());
+	}
 }

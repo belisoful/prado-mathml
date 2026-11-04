@@ -24,8 +24,8 @@ use Prado\Exceptions\TInvalidDataValueException;
  *
  * Properties:
  * - <b>Form</b>, string — `prefix`, `infix`, or `postfix`, selecting which
- *   dictionary entry applies. Empty (the default) renders no attribute. Other
- *   values throw.
+ *   dictionary entry applies, matched without regard to case and stored
+ *   lowercase. Empty (the default) renders no attribute. Other values throw.
  * - <b>Fence</b>, bool — whether the operator is a fence (a bracket).
  * - <b>Separator</b>, bool — whether the operator is a separator (a comma).
  * - <b>Stretchy</b>, bool — whether the operator stretches to its context's size.
@@ -38,7 +38,7 @@ use Prado\Exceptions\TInvalidDataValueException;
  *
  * @author Brad Anderson <belisoful@icloud.com>
  */
-class TMo extends TMathToken
+class TMo extends TMathElement
 {
 	/**
 	 * @return string the default tag name
@@ -58,12 +58,12 @@ class TMo extends TMathToken
 
 	/**
 	 * Sets the operator form, rendered as the `form` attribute.
-	 * @param string $value '' (no attribute), 'prefix', 'infix', or 'postfix'
+	 * @param string $value '' (no attribute), 'prefix', 'infix', or 'postfix', in any case
 	 * @throws TInvalidDataValueException if the value is not one of the above
 	 */
 	public function setForm($value)
 	{
-		$value = TPropertyValue::ensureString($value);
+		$value = strtolower(TPropertyValue::ensureString($value));
 		if ($value !== '' && $value !== 'prefix' && $value !== 'infix' && $value !== 'postfix') {
 			throw new TInvalidDataValueException('math_operator_form_invalid', $value);
 		}
@@ -179,7 +179,7 @@ class TMo extends TMathToken
 	 */
 	public function setLSpace($value)
 	{
-		$this->setViewState('LSpace', $value, '');
+		$this->setViewState('LSpace', TPropertyValue::ensureString($value), '');
 	}
 
 	/**
@@ -195,7 +195,7 @@ class TMo extends TMathToken
 	 */
 	public function setRSpace($value)
 	{
-		$this->setViewState('RSpace', $value, '');
+		$this->setViewState('RSpace', TPropertyValue::ensureString($value), '');
 	}
 
 	/**
@@ -211,7 +211,7 @@ class TMo extends TMathToken
 	 */
 	public function setMinSize($value)
 	{
-		$this->setViewState('MinSize', $value, '');
+		$this->setViewState('MinSize', TPropertyValue::ensureString($value), '');
 	}
 
 	/**
@@ -227,7 +227,7 @@ class TMo extends TMathToken
 	 */
 	public function setMaxSize($value)
 	{
-		$this->setViewState('MaxSize', $value, '');
+		$this->setViewState('MaxSize', TPropertyValue::ensureString($value), '');
 	}
 
 	/**

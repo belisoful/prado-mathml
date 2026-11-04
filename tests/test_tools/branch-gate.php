@@ -5,28 +5,26 @@
  *
  * Line coverage says a line ran; it says nothing about a decision that only ever went
  * one way.  This gate reads the serialized coverage of a `--path-coverage` run and
- * requires every source file to take all of its branches, except the few whose remaining
- * edges cannot be reached from any input.  Those are counted, not listed by line number,
- * so ordinary edits above them do not break the gate.
+ * requires every source file to take all of its branches, except any listed below,
+ * whose remaining edges cannot be reached from any input.  Those are counted, not
+ * listed by line number, so ordinary edits above them do not break the gate.  The
+ * list is empty: every branch in this extension is taken.
  *
- * Most of the allowed entries are not code anyone wrote: PHP emits an implicit
- * `UnhandledMatchError` edge for a `match` whose subject is already range-checked, an
- * implicit `return null` after a `while (true)` that only exits by return or throw, an
- * implicit `default` for a `switch` over a validated private field, and an implicit
- * rethrow for a multi-catch whose `try` can only raise the listed types.  The rest are
- * guards made redundant by an identical earlier check, or failures that need resources a
- * unit test cannot afford (a >4 GiB payload, a ~537 M pixel image).  See AGENTS.md.
+ * Such edges are usually not code anyone wrote: PHP emits implicit ones, for example
+ * an `UnhandledMatchError` edge for a `match` whose subject is already range-checked,
+ * or an implicit `default` for a `switch` over a validated value.  An entry added for
+ * one states its reason in a comment beside it.
  *
  * Because those edges are emitted by the compiler rather than written, *which* site
- * reports one moves between PHP and Xdebug versions: two identical multi-catches can swap
- * which of them carries the dead rethrow.  The per-file figures are therefore maximums,
+ * reports one moves between PHP and Xdebug versions: of two identical constructs, either
+ * can carry the dead edge.  The per-file figures are therefore maximums,
  * not exact counts, and a total cap keeps that tolerance from hiding real drift.  A file
  * that comes in under its maximum is reported, not failed.
  *
  * Usage: php tests/test_tools/branch-gate.php <coverage.php>
  *
  * @author Brad Anderson <belisoful@icloud.com>
- * @link https://github.com/pradosoft/prado
+ * @link https://github.com/belisoful/prado-mathml
  * @license https://github.com/pradosoft/prado/blob/master/LICENSE
  */
 

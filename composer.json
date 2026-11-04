@@ -34,10 +34,10 @@
 		}
 	],
 	"require": {
-		"php": ">=8.2.0"
+		"php": ">=8.2.0",
+		"pradosoft/prado": "^4.4@dev"
 	},
 	"require-dev": {
-		"pradosoft/prado": "^4.4@dev",
 		"phpunit/phpunit": "^10",
 		"phpdocumentor/shim": "^3",
 		"friendsofphp/php-cs-fixer": "^3.94",

@@ -1,7 +1,7 @@
 <?php
 
 use Prado\Web\UI\WebControls\Math\TMs;
-use Prado\Web\UI\WebControls\Math\TMathToken;
+use Prado\Web\UI\WebControls\Math\TMathElement;
 use PHPUnit\Framework\TestCase;
 
 class TMsTest extends TestCase
@@ -15,31 +15,23 @@ class TMsTest extends TestCase
 		$this->assertEquals('ms', $control->getTagName());
 	}
 
-	public function testExtendsTMathToken()
+	public function testExtendsTMathElement()
 	{
-		$this->assertInstanceOf(TMathToken::class, new TMs());
+		$this->assertInstanceOf(TMathElement::class, new TMs());
 	}
 
-	public function testDefaultsRenderNoQuoteAttributes()
+	public function testRendersTextContent()
 	{
 		$control = new TMs();
-		$this->assertEquals('', $control->getLQuote());
-		$this->assertEquals('', $control->getRQuote());
+		$control->getControls()->add('"abc"');
 		$output = $this->render($control);
-		$this->assertStringContainsString('<ms', $output);
-		$this->assertStringNotContainsString('lquote', $output);
-		$this->assertStringNotContainsString('rquote', $output);
+		$this->assertStringContainsString('<ms>"abc"</ms>', $output);
 	}
 
-	public function testSetQuotesRenderAttributes()
+	public function testHasNoQuoteProperties()
 	{
 		$control = new TMs();
-		$control->setLQuote('«');
-		$control->setRQuote('»');
-		$this->assertEquals('«', $control->getLQuote());
-		$this->assertEquals('»', $control->getRQuote());
-		$output = $this->render($control);
-		$this->assertStringContainsString('lquote="«"', $output);
-		$this->assertStringContainsString('rquote="»"', $output);
+		$this->assertFalse(method_exists($control, 'setLQuote'));
+		$this->assertFalse(method_exists($control, 'setRQuote'));
 	}
 }

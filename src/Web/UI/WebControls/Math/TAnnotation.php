@@ -10,6 +10,8 @@
 
 namespace Prado\Web\UI\WebControls\Math;
 
+use Prado\TPropertyValue;
+
 /**
  * TAnnotation class
  *
@@ -46,7 +48,7 @@ class TAnnotation extends TMathElement
 	 */
 	public function setEncoding($value)
 	{
-		$this->setViewState('Encoding', $value, '');
+		$this->setViewState('Encoding', TPropertyValue::ensureString($value), '');
 	}
 
 	/**

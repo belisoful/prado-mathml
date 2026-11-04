@@ -1,7 +1,7 @@
 <?php
 
 use Prado\Web\UI\WebControls\Math\TMn;
-use Prado\Web\UI\WebControls\Math\TMathToken;
+use Prado\Web\UI\WebControls\Math\TMathElement;
 use PHPUnit\Framework\TestCase;
 
 class TMnTest extends TestCase
@@ -17,7 +17,7 @@ class TMnTest extends TestCase
 
 	public function testExtendsBase()
 	{
-		$this->assertInstanceOf(TMathToken::class, new TMn());
+		$this->assertInstanceOf(TMathElement::class, new TMn());
 	}
 
 	public function testRendersTag()

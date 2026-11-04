@@ -4,3 +4,6 @@
 
 math_display_invalid			= The <math> Display ''{0}'' must be 'block', 'inline', or empty.
 math_operator_form_invalid		= The <mo> Form ''{0}'' must be 'prefix', 'infix', 'postfix', or empty.
+math_identifier_variant_invalid	= The <mi> MathVariant ''{0}'' must be 'normal' or empty.
+math_scriptlevel_invalid		= The ScriptLevel ''{0}'' must be an integer, optionally signed with '+' or '-', or empty.
+math_table_span_invalid			= The <mtd> {0} ''{1}'' must be an integer of at least {2}, or empty.

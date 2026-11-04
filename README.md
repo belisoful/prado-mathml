@@ -31,7 +31,7 @@ renders
 composer require belisoful/prado-mathml
 ```
 
-The package is a `prado4-extension`. Composer registers its
+The package is a `prado4-extension` and requires PRADO 4.4 and PHP 8.2. Composer registers its
 [class map](config/classMap.json) and [error messages](config/errorMessages.txt)
 from the `extra.prado` block of [composer.json](composer.json), so the short
 control names (`TMath`, `TMi`, …) resolve in templates with no further
@@ -50,8 +50,29 @@ framework's `THtmlElement` → `TWebControl`. So each one:
 - exposes the element's own meaningful MathML attributes as typed properties.
 
 MathML boolean attributes render as the literal `true`/`false` values the spec
-defines, and every element-specific attribute is written **only when set**, so an
-unset property leaves the browser's own default in force.
+defines, and every MathML attribute is written **only when set**, so an unset
+property leaves the browser's own default in force. Enumerated values (`Display`,
+`Form`, `MathVariant`) are matched without regard to case, as MathML Core matches
+them, and a value outside the spec throws `TInvalidDataValueException`.
+
+### Global attributes
+
+Every control also carries the MathML Core global attributes, which its content
+inherits. They are what `TMstyle` is for:
+
+| Property | Attribute | Value |
+| --- | --- | --- |
+| `DisplayStyle` | `displaystyle` | `true` (display layout) or `false` (compact layout) |
+| `ScriptLevel` | `scriptlevel` | an absolute level (`2`) or a relative one (`+1`, `-1`) |
+| `MathColor` | `mathcolor` | a CSS color |
+| `MathBackground` | `mathbackground` | a CSS color |
+| `MathSize` | `mathsize` | a CSS length or percentage |
+
+```html
+<com:TMstyle DisplayStyle="true" MathColor="darkblue">
+    <com:TMi>x</com:TMi>
+</com:TMstyle>
+```
 
 ### Root
 
@@ -59,18 +80,21 @@ unset property leaves the browser's own default in force.
 | --- | --- | --- |
 | `TMath` | `<math>` | `Display` (`block`, `inline`, or empty) |
 
+`TMath.Display` is the MathML `display` attribute. It replaces the CSS `Display`
+property every web control inherits, so hide a formula with `Visible="false"` or
+`Hidden="true"` rather than `Display="None"`.
+
 ### Token elements
 
-Token elements hold text rather than child elements. All share `MathVariant`
-(rendered as `mathvariant`) from the [`TMathToken`](src/Web/UI/WebControls/Math/TMathToken.php) base.
+Token elements hold text rather than child elements.
 
-| Control | Tag | Extra properties |
+| Control | Tag | Properties |
 | --- | --- | --- |
-| `TMi` | `<mi>` | — |
+| `TMi` | `<mi>` | `MathVariant` (`normal` or empty) |
 | `TMn` | `<mn>` | — |
 | `TMo` | `<mo>` | `Form`, `Fence`, `Separator`, `Stretchy`, `Symmetric`, `LargeOp`, `MovableLimits`, `LSpace`, `RSpace`, `MinSize`, `MaxSize` |
 | `TMtext` | `<mtext>` | — |
-| `TMs` | `<ms>` | `LQuote`, `RQuote` |
+| `TMs` | `<ms>` | — |
 | `TMspace` | `<mspace>` | `Width`, `Height`, `Depth` |
 
 ### General layout
@@ -81,7 +105,7 @@ Token elements hold text rather than child elements. All share `MathVariant`
 | `TMfrac` | `<mfrac>` | `LineThickness` |
 | `TMsqrt` | `<msqrt>` | — |
 | `TMroot` | `<mroot>` | — |
-| `TMstyle` | `<mstyle>` | — |
+| `TMstyle` | `<mstyle>` | — (the global attributes) |
 | `TMerror` | `<merror>` | — |
 | `TMpadded` | `<mpadded>` | `Width`, `Height`, `Depth`, `LSpace`, `VOffset` |
 | `TMphantom` | `<mphantom>` | — |
@@ -105,7 +129,7 @@ Token elements hold text rather than child elements. All share `MathVariant`
 | --- | --- | --- |
 | `TMtable` | `<mtable>` | — |
 | `TMtr` | `<mtr>` | — |
-| `TMtd` | `<mtd>` | `ColumnSpan`, `RowSpan` |
+| `TMtd` | `<mtd>` | `ColumnSpan` (at least 1), `RowSpan` (at least 0) |
 
 ### Semantics and annotations
 

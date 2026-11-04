@@ -5,21 +5,23 @@
  *
  * Fails the build when a source file that is expected to be fully covered has grown an
  * uncovered line.  Line coverage alone is a blunt gate — it drifts silently — so the
- * check is per file: every file must be complete except the few whose remaining lines
- * are unreachable from a test for a stated reason (see AGENTS.md), and those must keep
- * exactly the count recorded here.  A new gap anywhere else fails, and so does a file
- * that quietly gains or loses one.
+ * check is per file: every file must be complete except any listed below, whose
+ * remaining lines are unreachable from a test for a reason stated beside the entry,
+ * and those must keep exactly the count recorded here.  A new gap anywhere else fails,
+ * and so does a file that quietly gains or loses one.  The list is empty: every
+ * source file is fully covered.
  *
  * Usage: php tests/test_tools/coverage-gate.php <clover.xml> [minimum-line-percent]
  *
  * @author Brad Anderson <belisoful@icloud.com>
- * @link https://github.com/pradosoft/prado
+ * @link https://github.com/belisoful/prado-mathml
  * @license https://github.com/pradosoft/prado/blob/master/LICENSE
  */
 
 /**
- * The knowingly-unreachable lines, per file.  Each is justified in AGENTS.md; they are
- * counted, not listed by line number, so ordinary edits above them do not break the gate.
+ * The knowingly-unreachable lines, per file, each justified in a comment beside its
+ * entry.  They are counted, not listed by line number, so ordinary edits above them
+ * do not break the gate.
  */
 const ALLOWED_UNCOVERED = [
 	// Every source file in this extension is expected to be fully covered; there

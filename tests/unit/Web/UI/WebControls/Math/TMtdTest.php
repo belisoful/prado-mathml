@@ -2,6 +2,7 @@
 
 use Prado\Web\UI\WebControls\Math\TMtd;
 use Prado\Web\UI\WebControls\Math\TMathElement;
+use Prado\Exceptions\TInvalidDataValueException;
 use PHPUnit\Framework\TestCase;
 
 class TMtdTest extends TestCase
@@ -52,5 +53,49 @@ class TMtdTest extends TestCase
 		$control->setRowSpan('');
 		$this->assertNull($control->getColumnSpan());
 		$this->assertNull($control->getRowSpan());
+	}
+
+	public function testNullClearsSpans()
+	{
+		$control = new TMtd();
+		$control->setColumnSpan(2);
+		$control->setRowSpan(3);
+		$control->setColumnSpan(null);
+		$control->setRowSpan(null);
+		$this->assertNull($control->getColumnSpan());
+		$this->assertNull($control->getRowSpan());
+	}
+
+	public function testSpanMinimums()
+	{
+		$control = new TMtd();
+		$control->setColumnSpan(1);
+		$control->setRowSpan('0');
+		$this->assertSame(1, $control->getColumnSpan());
+		$this->assertSame(0, $control->getRowSpan());
+		$this->assertStringContainsString('rowspan="0"', $this->render($control));
+	}
+
+	public function testColumnSpanBelowOneThrows()
+	{
+		$control = new TMtd();
+		$this->expectException(TInvalidDataValueException::class);
+		$this->expectExceptionMessage("The <mtd> ColumnSpan '0' must be an integer of at least 1, or empty.");
+		$control->setColumnSpan(0);
+	}
+
+	public function testNegativeRowSpanThrows()
+	{
+		$control = new TMtd();
+		$this->expectException(TInvalidDataValueException::class);
+		$this->expectExceptionMessage("The <mtd> RowSpan '-2' must be an integer of at least 0, or empty.");
+		$control->setRowSpan(-2);
+	}
+
+	public function testNonIntegerSpanThrows()
+	{
+		$control = new TMtd();
+		$this->expectException(TInvalidDataValueException::class);
+		$control->setColumnSpan('abc');
 	}
 }

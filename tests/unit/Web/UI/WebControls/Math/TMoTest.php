@@ -1,7 +1,7 @@
 <?php
 
 use Prado\Web\UI\WebControls\Math\TMo;
-use Prado\Web\UI\WebControls\Math\TMathToken;
+use Prado\Web\UI\WebControls\Math\TMathElement;
 use Prado\Exceptions\TInvalidDataValueException;
 use PHPUnit\Framework\TestCase;
 
@@ -16,9 +16,9 @@ class TMoTest extends TestCase
 		$this->assertEquals('mo', $control->getTagName());
 	}
 
-	public function testExtendsTMathToken()
+	public function testExtendsTMathElement()
 	{
-		$this->assertInstanceOf(TMathToken::class, new TMo());
+		$this->assertInstanceOf(TMathElement::class, new TMo());
 	}
 
 	public function testDefaultsRenderNoDictionaryAttributes()
@@ -106,8 +106,8 @@ class TMoTest extends TestCase
 		$control->setLargeOp(true);
 		$control->setMovableLimits(true);
 
-		// null and '' both clear back to the unset state.
-		$control->setFence(null);
+		// '' clears back to the unset state.
+		$control->setFence('');
 		$control->setSeparator('');
 		$control->setStretchy('');
 		$control->setSymmetric('');
@@ -141,10 +141,54 @@ class TMoTest extends TestCase
 		$this->assertStringContainsString('maxsize="3em"', $output);
 	}
 
-	public function testInheritedMathVariantRenders()
+	public function testHasNoMathVariant()
+	{
+		$this->assertFalse(method_exists(new TMo(), 'setMathVariant'));
+	}
+
+	public function testEveryBooleanAttributeClearsWithNull()
 	{
 		$control = new TMo();
-		$control->setMathVariant('bold');
-		$this->assertStringContainsString('mathvariant="bold"', $this->render($control));
+		$control->setFence(true);
+		$control->setSeparator(true);
+		$control->setStretchy(true);
+		$control->setSymmetric(true);
+		$control->setLargeOp(true);
+		$control->setMovableLimits(true);
+
+		$control->setFence(null);
+		$control->setSeparator(null);
+		$control->setStretchy(null);
+		$control->setSymmetric(null);
+		$control->setLargeOp(null);
+		$control->setMovableLimits(null);
+
+		$this->assertNull($control->getFence());
+		$this->assertNull($control->getSeparator());
+		$this->assertNull($control->getStretchy());
+		$this->assertNull($control->getSymmetric());
+		$this->assertNull($control->getLargeOp());
+		$this->assertNull($control->getMovableLimits());
+	}
+
+	public function testFormIsCaseInsensitive()
+	{
+		$control = new TMo();
+		$control->setForm('PostFix');
+		$this->assertSame('postfix', $control->getForm());
+		$this->assertStringContainsString('form="postfix"', $this->render($control));
+	}
+
+	public function testStringAttributesCoerceToString()
+	{
+		$control = new TMo();
+		$control->setLSpace(0);
+		$control->setRSpace(0);
+		$control->setMinSize(1);
+		$control->setMaxSize(2);
+		$this->assertSame('0', $control->getLSpace());
+		$this->assertSame('0', $control->getRSpace());
+		$this->assertSame('1', $control->getMinSize());
+		$this->assertSame('2', $control->getMaxSize());
 	}
 }

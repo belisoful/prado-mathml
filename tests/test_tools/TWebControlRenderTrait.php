@@ -4,7 +4,7 @@
  * TWebControlRenderTrait class file.
  *
  * @author Brad Anderson <belisoful@icloud.com>
- * @link https://github.com/pradosoft/prado
+ * @link https://github.com/belisoful/prado-mathml
  * @license https://github.com/pradosoft/prado/blob/master/LICENSE
  */
 
@@ -19,7 +19,6 @@ use Prado\IO\TTextWriter;
  * the captured HTML string.
  *
  * @author Brad Anderson <belisoful@icloud.com>
- * @since 4.4.0
  */
 trait TWebControlRenderTrait
 {

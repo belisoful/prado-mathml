@@ -10,6 +10,8 @@
 
 namespace Prado\Web\UI\WebControls\Math;
 
+use Prado\TPropertyValue;
+
 /**
  * TMfrac class
  *
@@ -46,7 +48,7 @@ class TMfrac extends TMathElement
 	 */
 	public function setLineThickness($value)
 	{
-		$this->setViewState('LineThickness', $value, '');
+		$this->setViewState('LineThickness', TPropertyValue::ensureString($value), '');
 	}
 
 	/**
